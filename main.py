@@ -67,6 +67,7 @@ def main():
             print("\nНеизвестный выбор!\n")
             continue
 
+
         try:
             # Динамический импорт модуля
             module = importlib.import_module(module_name)
