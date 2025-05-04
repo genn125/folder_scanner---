@@ -51,6 +51,7 @@ def main():
     # 4. Сканирование
     output_file = f"Сканер_папок_с_файлами ({datetime.now().strftime('%H_%M  %d-%B-%y')}).txt"
     print(f"Сканирую '{target_dir}'...")
+
     if scan_directory(target_dir, output_file):
         print(f"✅ Результат сохранён в '{output_file}'")
     else:

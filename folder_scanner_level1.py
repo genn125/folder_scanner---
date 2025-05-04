@@ -33,7 +33,7 @@ def sorted_save_folders(music_folders,output_file):
                 f.write(f"\n ---> {folder.name}")
         return  True
     except Exception as e:
-        print(f"Ошибка сканирования: {e}", file=sys.stderr)
+        print(f"Ошибка сканирования11: {e}", file=sys.stderr)
         return False
 
 
