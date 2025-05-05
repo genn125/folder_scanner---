@@ -32,7 +32,18 @@ def scan_directory(music_folders, output_file):
                 for root, _, files in os.walk(folder):
                     level = root.replace(folder, "").count(os.sep)
                     indent = "       " * level
+                    # Папка
                     f.write(f"{indent}📁 {os.path.basename(root)}\n")
+                    # # Файлы
+                    # for file in files:
+                    #     filepath = os.path.join(root, file)
+                    #     try:
+                    #         stat = os.stat(filepath)
+                    #         size = stat.st_size / 1024  # KB
+                    #         # mod_time = datetime.fromtimestamp(stat.st_mtime).strftime("%d.%m.%Y %H:%M")
+                    #         f.write(f"{indent}       ──>📄 {file} ({size:.2f} KB)\n")
+                    #     except OSError as e:
+                    #         f.write(f"{indent}│  ├── ❌ {file} (ошибка: {e})\n")
         return True
     except Exception as e:
         print(f"Ошибка сканирования  1: {e}", file=sys.stderr)
@@ -40,7 +51,7 @@ def scan_directory(music_folders, output_file):
 
 def main():
     print("\n🔍---===== Сканирование папок без файлов =====---")
-    folder_path = r"C:\Users\genn1\Downloads"  # '\\bananovoeVeslo\2Музыка\1 РУССКАЯ'#"/storage/emulated/0/Music"#
+    folder_path = r"C:\Users\genn1\Downloads" # '\\bananovoeVeslo\2Музыка\1 РУССКАЯ'#"/storage/emulated/0/Music"#
     output_file = f"Сканер_папок_1_уровня ({datetime.now().strftime('%H_%M  %d-%B-%y')}).txt"
     print(f"\nСканирую '{folder_path}'...")
 
@@ -55,7 +66,7 @@ def main():
     else:
         print("⚠️ Не найдено папок с музыкой", file=sys.stderr)
 
-    print(f"\nПример содержимого:\n")
+    print("\nПример содержимого:\n")
     with open(output_file, 'r', encoding='utf-8') as f:
         n = 200  # печатаем первые n символов из созданного файла
         print(f.read(n))

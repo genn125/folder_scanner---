@@ -1,9 +1,9 @@
 import os
 from datetime import datetime
 import sys
-#import subprocess
-#import json
-#from pathlib import Path
+# import subprocess
+# import json
+# from pathlib import Path
 
 AUDIO_EXTENSIONS = {'.mp3', '.flac', '.wav', '.ogg', '.m4a', '.aac', '.wma'}
 # 1 Проверяет наличие музыкальных файлов в папках
@@ -13,6 +13,7 @@ def has_music_files(folder_path):
             if os.path.splitext(file)[1].lower() in AUDIO_EXTENSIONS:
                 return True
     return False
+
 # 2 Сканирует ТОЛЬКО папки с музыкой
 def scan_music_folders(folder_path):
     music_folders = []
@@ -27,10 +28,10 @@ def scan_directory(music_folders, output_file):
     try:
         with open(output_file, "w", encoding="utf-8") as f:
             f.write(f"        Мои группы. \nДата создания списка: ({datetime.now().strftime('%H:%M %d-%B-%y')})\n\n")
-            for folder in music_folders:  # Теперь обрабатываем все папки
+            for folder in sorted(music_folders, key=lambda x: os.path.basename(x).lower()):  # Сортируем папки
                 for root, _, files in os.walk(folder):
                     level = root.replace(folder, "").count(os.sep)
-                    indent = "    " * level
+                    indent = "       " * level
                     # Папка
                     f.write(f"{indent}     📁 {os.path.basename(root)}/\n")
                     # Файлы
@@ -49,8 +50,8 @@ def scan_directory(music_folders, output_file):
         return False
 
 def main():
-    print("🔍 ...---===Глубокий сканер папок с файлами===---...")
-    folder_path = r'C:\Users\genn1\Downloads'#'\\bananovoeVeslo\2Музыка\1 РУССКАЯ' #"/storage/emulated/0/Music"#
+    print("\n🔍 ...---===Глубокий сканер папок с файлами===---...")
+    folder_path = r'C:\Users\genn1\Downloads' #'\\bananovoeVeslo\2Музыка\1 РУССКАЯ' #"/storage/emulated/0/Music"#
     output_file = f"Сканер_папок_с_файлами ({datetime.now().strftime('%H_%M  %d-%B-%y')}).txt"
     print(f"\nСканирую '{folder_path}'...")
 
