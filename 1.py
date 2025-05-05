@@ -27,14 +27,14 @@ def scan_directory(music_folders, output_file):
     try:
         with open(output_file, "w", encoding="utf-8") as f:
             f.write(f"        Мои группы. \nДата создания списка: ({datetime.now().strftime('%H:%M %d-%B-%y')})\n\n")
-            for folder in music_folders:  # Теперь обрабатываем все папки
+            for folder in sorted(music_folders, key=lambda x: os.path.basename(x).lower()):  # Сортируем папки
                 for root, _, files in os.walk(folder):
                     level = root.replace(folder, "").count(os.sep)
                     indent = "    " * level
                     # Папка
                     f.write(f"{indent}  ──>📁 {os.path.basename(root)}/\n")
                     # Файлы
-                    for file in files:
+                    for file in sorted(files, key=lambda x: x.lower()):  # Добавлено sorted()
                         filepath = os.path.join(root, file)
                         try:
                             stat = os.stat(filepath)
