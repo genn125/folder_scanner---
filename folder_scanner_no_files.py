@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-# import sys
+import sys
 # import subprocess
 # import json
 # from pathlib import Path
@@ -13,54 +13,51 @@ def has_music_files(folder_path):
             if os.path.splitext(file)[1].lower() in AUDIO_EXTENSIONS:
                 return True
     return False
-# 2 Рекурсивно получает отсортированную структуру папок
-def get_sorted_folder_structure(root_path):
-    structure = [] #  Список папок и сортировка по имени
-    items = sorted(os.listdir(root_path), key=lambda x: x.lower())
-    for item in items:
-        item_path = os.path.join(root_path, item)
-        if os.path.isdir(item_path) and not item.startswith('.'):
-           if has_music_files(item_path): # Для каждой папки получить её подпапки (рекурсивно)
-                subfolders = get_sorted_folder_structure(item_path)
-                structure.append({
-                        'name': item,
-                        'path': item_path,
-                        'subfolders': subfolders
-                    })
 
-    return structure
+# 2 Сканирует ТОЛЬКО папки с музыкой
+def scan_music_folders(folder_path):
+    music_folders = []
+    with os.scandir(folder_path) as entries:
+        for entry in entries:
+            if entry.is_dir() and has_music_files(entry.path):  # Проверяем, что это директория
+                music_folders.append(entry.path)  # Добавляем путь в список
+    return music_folders
 
-#3 Сохраняет отсортированную структуру в файл
-def save_sorted_structure(structure, output_file, level=0):
-    with open(output_file, 'w', encoding='utf-8') as f:
-        f.write("Структура папок:\n\n")
-        _write_structure_recursive(f, structure, level)
-
-
-
-def _write_structure_recursive(f, structure, level):
-    """Рекурсивно записать структуру папок с отступами."""
-    for folder in structure:
-        indent = "    |-->" * level
-        f.write(f"{indent} {folder['name']}\n")
-        if folder['subfolders']:
-            _write_structure_recursive(f, folder['subfolders'], level + 1)
+# 3 Рекурсивно сканирует и сохраняет структуру с метаданными в файл
+def scan_directory(music_folders, output_file):
+    try:
+        with open(output_file, "w", encoding="utf-8") as f:
+            f.write(f"        Мои группы. \nДата создания списка: ({datetime.now().strftime('%H:%M %d-%B-%y')})\n\n")
+            for folder in sorted(music_folders, key=lambda x: os.path.basename(x).lower()):  # Сортируем папки
+                for root, _, files in os.walk(folder):
+                    level = root.replace(folder, "").count(os.sep)
+                    indent = "       " * level
+                    f.write(f"{indent}📁 {os.path.basename(root)}\n")
+        return True
+    except Exception as e:
+        print(f"Ошибка сканирования  1: {e}", file=sys.stderr)
+        return False
 
 def main():
-    print("\n---===== Сканирование папок без файлов =====---")
-    target_dir = r"C:\Users\genn1\Downloads"#"/storage/emulated/0/Music"#
-    output_file = f"Сканер_папок_без_файлов ({datetime.now().strftime('%H_%M  %d-%B-%y')}).txt"
+    print("\n🔍---===== Сканирование папок без файлов =====---")
+    folder_path = r"C:\Users\genn1\Downloads"  # '\\bananovoeVeslo\2Музыка\1 РУССКАЯ'#"/storage/emulated/0/Music"#
+    output_file = f"Сканер_папок_1_уровня ({datetime.now().strftime('%H_%M  %d-%B-%y')}).txt"
+    print(f"\nСканирую '{folder_path}'...")
 
-    """Получить отсортированную структуру"""
-    folder_structure = get_sorted_folder_structure(target_dir)
-    
-    """Сохранить в файл"""
-    save_sorted_structure(folder_structure, output_file)
+    """Сканирует только папки с музыкой"""
+    music_folders = scan_music_folders(folder_path)
 
-    print(f"\nОтсортированная структура сохранена в файле\n {output_file}")
-    print("\nПример содержимого:\n")
+    if music_folders:  # Проверяем, что найдены папки с музыкой
+        if scan_directory(music_folders, output_file):
+            print(f"✅ Результат сохранён в файл\n   '{output_file}'")
+        else:
+            print("❌ Сканирование завершено с ошибками", file=sys.stderr)
+    else:
+        print("⚠️ Не найдено папок с музыкой", file=sys.stderr)
+
+    print(f"\nПример содержимого:\n")
     with open(output_file, 'r', encoding='utf-8') as f:
-        n = 1000  # печатаем первые n символов из созданного файла
+        n = 200  # печатаем первые n символов из созданного файла
         print(f.read(n))
 
 if __name__ == "__main__":
