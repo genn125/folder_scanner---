@@ -13,6 +13,7 @@ def has_music_files(folder_path):
             if os.path.splitext(file)[1].lower() in AUDIO_EXTENSIONS:
                 return True
     return False
+
 # 2 Сканирует ТОЛЬКО папки с музыкой
 def scan_music_folders(folder_path):
     music_folders = []
@@ -21,28 +22,6 @@ def scan_music_folders(folder_path):
             if entry.is_dir() and has_music_files(entry.path):  # Проверяем, что это директория
                 music_folders.append(entry.path)  # Добавляем путь в список
     return music_folders
-# 2 Сканирует ТОЛЬКО папки с музыкой
-# def scan_music_folders(folder_path):
-#     music_folders = set()
-#     with os.scandir(folder_path) as entries:
-#         for entry in entries:
-#             if has_music_files(entry):
-#                 music_folders.add(entry) # Тут передаем множество в отличие от глубокого сканера
-#     return music_folders
-
-# 3 Сортирует и сохраняет структуру в файл
-# def sorted_save_folders(music_folders,output_file):
-#     try:
-#         sorted_folders = sorted(music_folders, key=lambda x: x.name)
-#         #sorted_folders = sorted(music_folders, key=lambda x: x.stat().st_mtime)  # по времени изменения
-#         with open(output_file, "w", encoding="utf-8") as f:
-#             f.write(f"        Мои группы. \nДата создания списка: ({datetime.now().strftime('%H:%M %d-%B-%y')})\n")
-#             for folder in sorted_folders:
-#                 f.write(f"\n ---> {folder.name}")
-#         return  True
-#     except Exception as e:
-#         print(f"Ошибка сканирования11: {e}", file=sys.stderr)
-#         return False
 
 # 3 Рекурсивно сканирует и сохраняет структуру с метаданными в файл
 def scan_directory(music_folders, output_file):
@@ -50,7 +29,21 @@ def scan_directory(music_folders, output_file):
         with open(output_file, "w", encoding="utf-8") as f:
             f.write(f"        Мои группы. \nДата создания списка: ({datetime.now().strftime('%H:%M %d-%B-%y')})\n\n")
             for folder in sorted(music_folders, key=lambda x: os.path.basename(x).lower()):  # Сортируем папки
-                f.write(f"\n   {os.path.basename(folder)}")
+                # for root, _, files in os.walk(folder):
+                #     level = root.replace(folder, "").count(os.sep)
+                #     indent = "       " * level
+                #     # Папка
+                f.write(f"\n   {os.path.basename(folder)}")#     f.write(f"{indent}     📁 {os.path.basename(root)}/\n")
+                #     # Файлы
+                #     for file in files:
+                #         filepath = os.path.join(root, file)
+                #         try:
+                #             stat = os.stat(filepath)
+                #             size = stat.st_size / 1024  # KB
+                #             #mod_time = datetime.fromtimestamp(stat.st_mtime).strftime("%d.%m.%Y %H:%M")
+                #             f.write(f"{indent}       ──>📄 {file} ({size:.2f} KB)\n")
+                #         except OSError as e:
+                #             f.write(f"{indent}│  ├── ❌ {file} (ошибка: {e})\n")
         return True
     except Exception as e:
         print(f"Ошибка сканирования  1: {e}", file=sys.stderr)
@@ -59,7 +52,7 @@ def scan_directory(music_folders, output_file):
 def main():
     print("🔍 ===== Сканирование папок 1 уровня =====")
     folder_path = r"C:\Users\genn1\Downloads"#'\\bananovoeVeslo\2Музыка\1 РУССКАЯ'#"/storage/emulated/0/Music"#
-    output_file = f"Сканер_папок_1_уровня ({datetime.now().strftime('%H_%M  %d-%B-%y')}).txt"
+    output_file = f"Сканер папок 1 уровня ({datetime.now().strftime('%H_%M  %d-%B-%y')}).txt"
     print(f"\nСканирую '{folder_path}'...")
 
     """Сканирует только папки с музыкой"""

@@ -52,7 +52,7 @@ def scan_directory(music_folders, output_file):
 def main():
     print("\n🔍---===== Сканирование папок без файлов =====---")
     folder_path = r"C:\Users\genn1\Downloads" # '\\bananovoeVeslo\2Музыка\1 РУССКАЯ'#"/storage/emulated/0/Music"#
-    output_file = f"Сканер_папок_1_уровня ({datetime.now().strftime('%H_%M  %d-%B-%y')}).txt"
+    output_file = f"Сканер папок БЕЗ файлов ({datetime.now().strftime('%H_%M  %d-%B-%y')}).txt"
     print(f"\nСканирую '{folder_path}'...")
 
     """Сканирует только папки с музыкой"""

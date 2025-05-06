@@ -81,41 +81,6 @@ def main():
 if __name__ == "__main__":
     main()
 
-
-
-# import importlib
-# import sys
-# #from past.builtins import raw_input
-#
-# while True:
-#     #choice = sys.stdin.readline('hhhhhhh')
-#     def safe_input(prompt):
-#         try:
-#             return input(prompt)  # Пробуем обычный input()
-#         except:
-#             try:
-#                 return sys.__stdin__.readline()  # Пробуем резервный stdin
-#             except:
-#                 return "default_value"  # Возвращаем значение по умолчанию
-#
-#     choice = safe_input("Введите 1,2,3 или 0 для выхода: ")
-#     print("Вы ввели:", choice)
-#
-#     module_name = (
-#         'Сканер_папок_1_уровня' if choice == '1' else
-#         'Сканер_папок_без_файлов' if choice == '2' else
-#         'Сканер_папок_с_файлами' if choice == '3' else
-#         None
-#     )
-#     if choice == '0':
-#                 print('Выход')
-#                 break
-#     if not module_name:
-#         print("\nНеизвестный выбор!\n")
-#
-#     else:
-#         module = importlib.import_module(module_name)
-#         print(f"\nИмпортирован модуль {module_name}")
         
    
         
