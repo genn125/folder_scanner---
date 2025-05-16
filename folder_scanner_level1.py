@@ -23,7 +23,7 @@ def scan_music_folders(folder_path):
                 music_folders.append(entry.path)  # Добавляем путь в список
     return music_folders
 
-# 3 Рекурсивно сканирует и сохраняет структуру с метаданными в файл
+# 3 Сканирует только 1 уровень и сохраняет в файл
 def scan_directory(music_folders, output_file):
     try:
         with open(output_file, "w", encoding="utf-8") as f:
