@@ -33,11 +33,11 @@ def safe_input(prompt):
 # ==============================================
 # Словарь соответствия выбора и модулей
 # ==============================================
-# Важно: используйте латинские имена для модулей!
+
 MODULES_MAP = {
-    '1': 'folder_scanner_level1',  # Было: Сканер_папок_1_уровня
-    '2': 'folder_scanner_no_files',  # Было: Сканер_папок_без_файлов
-    '3': 'folder_scanner_with_files'  # Было: Сканер_папок_с_файлами
+    '1': 'folder_scanner_level1',
+    '2': 'folder_scanner_no_files',
+    '3': 'folder_scanner_with_files'
 }
 # ==============================================
 # Основной цикл программы
@@ -60,8 +60,6 @@ def main():
         if not module_name:
             print("\nНеизвестный выбор!\n")
             continue
-
-
         try:
             # Динамический импорт модуля
             module = importlib.import_module(module_name)
