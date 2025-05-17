@@ -23,7 +23,7 @@ def scan_music_folders(folder_path):
                 music_folders.append(entry.path)  # Добавляем путь в список
     return music_folders
 
-# 3 Рекурсивно сканирует и сохраняет структуру в файл
+# 3 Рекурсивно сканирует и сохраняет структуру с метаданными в файл
 def scan_directory(music_folders, output_file):
     try:
         with open(output_file, "w", encoding="utf-8") as f:
@@ -50,8 +50,8 @@ def scan_directory(music_folders, output_file):
         return False
 
 def main():
-    print("\n🔍---===== Сканирование (рекурсивное) папок без файлов =====---")
-    folder_path = r
+    print("\n🔍---===== Сканирование папок без файлов =====---")
+    folder_path = r'\\bananovoeVeslo\2Музыка\1 РУССКАЯ' #"/storage/emulated/0/Music"#'C:\Users\genn1\Downloads' #
     output_file = f"Сканер папок БЕЗ файлов ({datetime.now().strftime('%H_%M  %d-%B-%y')}).txt"
     print(f"\nСканирую '{folder_path}'...")
 
