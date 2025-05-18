@@ -50,7 +50,7 @@ def scan_directory(music_folders, output_file):
         return False
 
 def main():
-    print("\n🔍 ...---===Глубокий сканер папок с файлами===---...")
+    print("\n🔍 ...---=== Сканирование (рекурсивное) папок с файлами ===---...")
     folder_path = r'\\bananovoeVeslo\2Музыка\1 РУССКАЯ' #"/storage/emulated/0/Music"#'C:\Users\genn1\Downloads' #
     output_file = f"Сканер папок с файлами ({datetime.now().strftime('%H_%M  %d-%B-%y')}).txt"
     print(f"\nСканирую '{folder_path}'...")
