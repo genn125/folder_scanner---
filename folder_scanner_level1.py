@@ -51,7 +51,7 @@ def scan_directory(music_folders, output_file):
 
 def main():
     print("🔍 ===== Сканирование папок 1 уровня =====")
-    folder_path = r'\\bananovoeVeslo\2Музыка\1 РУССКАЯ' #"/storage/emulated/0/Music"#'C:\Users\genn1\Downloads' #
+    folder_path =
     output_file = f"Сканер папок 1 уровня ({datetime.now().strftime('%H_%M  %d-%B-%y')}).txt"
     print(f"\nСканирую '{folder_path}'...")
 
